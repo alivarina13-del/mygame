@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Какой ты советский мультгерой после практикума по ИИ?</title>
+<style>
+:root{--ink:#193b70;--paper:#fffaf1;--accent:#6254bd;--blue:#dcecff;--purple:#eee5ff;--green:#e0f5e8;--yellow:#fff0c9;--pink:#ffe1e2}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;background:linear-gradient(180deg,#dcecff 0,#fffaf1 34%,#e8f0ff 100%);min-height:100vh}
+main{width:min(100% - 28px,760px);margin:0 auto;padding:26px 0 40px}
+.hero{background:rgba(255,250,241,.92);border:2px solid #c8d9f4;border-radius:28px;padding:26px 22px;text-align:center;box-shadow:0 8px 26px #284a7010}
+.hedgehog{font-size:48px;line-height:1.2}
+h1{font-size:clamp(26px,5vw,42px);line-height:1.08;margin:8px 0 12px}
+.subtitle{font-size:clamp(15px,2.5vw,18px);margin:0 auto;max-width:640px;line-height:1.5}
+.note{display:inline-block;margin-top:14px;padding:8px 13px;border-radius:999px;background:#eef3ff;font-size:13px}
+.progress-wrap{display:flex;align-items:center;gap:12px;margin:20px 4px 16px;font-weight:700}
+.progress{height:10px;flex:1;border-radius:99px;background:#d9e3f3;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .25s}
+.screen{display:none}
+.screen.active{display:block;animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.question{padding:20px;border:1.5px solid #c9d8ed;border-radius:22px;background:#fffdf9;box-shadow:0 6px 20px #284a7010}
+.question.tone-1{background:var(--blue);border-color:#a9ccf4}
+.question.tone-2{background:var(--purple);border-color:#cfc0fa}
+.question.tone-3{background:var(--green);border-color:#a9dfc0}
+.question.tone-4{background:var(--yellow);border-color:#efd18a}
+.question.tone-5{background:var(--pink);border-color:#f5b8bd}
+.qhead{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.num{display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:50%;background:#fff;color:var(--ink);font-weight:900}
+h2{font-size:clamp(17px,3vw,21px);line-height:1.35;margin:4px 0 0}
+.options{display:grid;gap:10px}
+label.option{display:flex;gap:10px;align-items:flex-start;cursor:pointer;line-height:1.45;font-size:15px;padding:10px 12px;border-radius:12px;background:#ffffffb0;border:1.5px solid transparent;transition:background .15s,border-color .15s}
+label.option:hover{background:#ffffff}
+label.option.selected{background:#fff;border-color:var(--accent)}
+input[type=radio]{accent-color:var(--accent);margin-top:3px;flex:0 0 auto;width:17px;height:17px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-top:18px}
+button{border:0;border-radius:999px;background:var(--accent);color:white;font:700 16px inherit;font-size:16px;font-weight:800;padding:14px 25px;cursor:pointer;box-shadow:0 5px 0 #43378f;transition:transform .12s,filter .12s}
+button:hover{filter:brightness(1.06);transform:translateY(-1px)}
+button:active{transform:translateY(2px);box-shadow:0 3px 0 #43378f}
+button.secondary{background:#e8edf8;color:var(--ink);box-shadow:0 4px 0 #c7d3e8}
+.hint{min-height:22px;margin-top:12px;font-size:14px;font-weight:700;color:#8a4b00;text-align:center;opacity:0;transition:opacity .2s}
+.hint.show{opacity:1}
+.small{font-size:13px;opacity:.8;margin-top:10px;text-align:center}
+.result{background:var(--paper);border:2px solid #d4def0;border-radius:25px;padding:24px;box-shadow:0 10px 28px #284a7012}
+.result-top{display:flex;gap:18px;align-items:center}
+.result-emoji{font-size:80px;flex:0 0 140px;width:140px;height:140px;text-align:center;background:#e7efff;border-radius:22px;padding:8px;display:grid;place-items:center;overflow:hidden;border:2px solid #cfdcf5}
+.kicker{font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#5d6f91}
+.result h2{font-size:clamp(23px,4vw,32px);margin:4px 0 8px}
+.quote{font-size:17px;font-style:italic;margin:8px 0}
+.result p{line-height:1.55}
+.powers{background:#eef1ff;border-radius:16px;padding:14px 17px;margin-top:15px}
+.powers h3{margin:0 0 8px;font-size:16px}
+.powers ul{margin:0;padding-left:20px;line-height:1.7}
+.result-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+footer{text-align:center;font-size:13px;opacity:.8;margin-top:24px;line-height:1.5}
+@media(max-width:560px){main{width:min(100% - 18px,520px);padding-top:12px}.hero{padding:21px 15px;border-radius:22px}.result{padding:17px}.result-top{align-items:flex-start;gap:12px}.result-emoji{flex-basis:100px;width:100px;height:100px;font-size:60px}.nav button,.result-actions button{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="hedgehog" aria-hidden="true">🦔 ✨ 🌲</div>
+    <h1>Какой ты советский мультгерой<br>после практикума по ИИ?</h1>
+    <p class="subtitle">6 шуточных вопросов — по одному на экран. В конце узнаешь, кто ты из любимых советских мультфильмов после встречи с искусственным интеллектом.</p>
+    <div class="note">☕ Здесь нет неправильных ответов — отвечай как чувствуешь!</div>
+  </header>
+
+  <div class="progress-wrap" aria-live="polite">
+    <span id="progressText">⭐ 0 из 6</span>
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progressBar"><span id="progressFill"></span></div>
+  </div>
+
+  <form id="quiz" novalidate>
+    <div id="screens"></div>
+
+    <section class="screen" id="resultScreen" aria-live="polite" tabindex="-1">
+      <div class="result" id="result">
+        <div class="result-top">
+          <div class="result-emoji" id="resultEmoji">🦔</div>
+          <div>
+            <div class="kicker">Твой советский мультгерой</div>
+            <h2 id="resultTitle"></h2>
+            <div class="quote" id="resultQuote"></div>
+          </div>
+        </div>
+        <p id="resultDescription"></p>
+        <div class="powers">
+          <h3>Твои суперсилы</h3>
+          <ul id="resultPowers"></ul>
+        </div>
+        <p id="resultTip"></p>
+        <div class="result-actions">
+          <button type="button" id="copyBtn">Скопировать результат</button>
+          <button type="button" class="secondary" id="restartBtn">Пройти ещё раз ↻</button>
+        </div>
+        <div class="small" id="copyStatus" role="status"></div>
+      </div>
+    </section>
+
+    <div class="small" id="hint" aria-live="polite"></div>
+  </form>
+
+  <footer>Каждый учитель — уже немного создатель будущего. 💙<br>Шуточный тест для рефлексии после практикума по созданию HTML-игр с помощью ИИ.</footer>
+</main>
+
+<script>
+const questions = [
+ {q:"С каким настроением ты пришёл на практикум?",opts:[
+  {t:"Бодро! Сейчас научу нейросеть жить", s:{E:2,L:1,C:0,H:0}},
+  {t:"С любопытством: посмотрим, что за зверь этот ИИ", s:{E:0,L:2,C:1,H:0}},
+  {t:"С опаской: лишь бы ничего не сломать", s:{E:0,L:0,C:2,H:0}},
+  {t:"Я просто хотел(а) попить чай с коллегами", s:{E:0,L:0,C:0,H:2}}
+ ]},
+ {q:"Что происходило в голове, когда мы создавали HTML-игру?",opts:[
+  {t:"Всё понятно, я теперь геймдевелопер!", s:{E:2,L:1,C:0,H:0}},
+  {t:"Вроде понятно… но лучше не закрывать вкладку", s:{E:0,L:1,C:1,H:0}},
+  {t:"Мозг загрузился на 37%", s:{E:0,L:0,C:2,H:0}},
+  {t:"Я нажимал(а) кнопки и верил(а) в лучшее", s:{E:0,L:0,C:0,H:2}}
+ ]},
+ {q:"Как тебе идея использовать ИИ для создания учебных игр?",opts:[
+  {t:"Гениально! Где моя премия за инновации?", s:{E:2,L:1,C:0,H:0}},
+  {t:"Полезно, надо попробовать с детьми", s:{E:1,L:2,C:0,H:0}},
+  {t:"Интересно, но нужно ещё разобраться", s:{E:0,L:2,C:1,H:0}},
+  {t:"А можно, чтобы ИИ ещё и проверял тетради?", s:{E:0,L:0,C:0,H:2}}
+ ]},
+ {q:"Насколько ты уверен(а), что сможешь повторить всё самостоятельно?",opts:[
+  {t:"На все 100%! Дайте мне класс и ноутбук", s:{E:2,L:0,C:0,H:0}},
+  {t:"С подсказками точно справлюсь", s:{E:0,L:2,C:1,H:0}},
+  {t:"Мне бы инструкцию, чай и моральную поддержку", s:{E:0,L:0,C:1,H:2}},
+  {t:"Я сохранил(а) файл. Это уже победа", s:{E:0,L:0,C:2,H:1}}
+ ]},
+ {q:"Что больше всего понравилось на практикуме?",opts:[
+  {t:"Сам процесс создания игры", s:{E:2,L:1,C:0,H:0}},
+  {t:"Момент, когда всё наконец заработало", s:{E:1,L:1,C:1,H:0}},
+  {t:"Новые идеи для уроков", s:{E:0,L:2,C:0,H:0}},
+  {t:"Что можно было экспериментировать и не бояться ошибок", s:{E:0,L:0,C:0,H:2}}
+ ]},
+ {q:"С каким ощущением ты уходишь?",opts:[
+  {t:"Вдохновение! Хочу ещё", s:{E:2,L:0,C:0,H:0}},
+  {t:"Унесу идеи в школу и попробую", s:{E:1,L:2,C:0,H:0}},
+  {t:"Нужно переварить информацию", s:{E:0,L:1,C:2,H:0}},
+  {t:"Я пока в тумане, но туман уже симпатичный!", s:{E:0,L:0,C:0,H:2}}
+ ]}
+];
+
+const characters = [
+ {id:"eeyore", name:"Ёжик в тумане", emoji:"🦔", 
+  quote:"«Я не всё понял, но мне очень понравилось. А где тут кнопка “сделать красиво”?»",
+  desc:"Ты осторожно исследуешь мир ИИ — и это совершенно нормально. Необязательно понять всё с первого раза: любопытство уже помогает найти тропинку сквозь туман.",
+  powers:["Честность с собой","Умение замечать, что ещё хочется узнать","Потенциал для больших открытий"],
+  tip:"Твой следующий шаг: повтори один маленький этап и сохрани себе инструкцию. Туман рассеивается с практикой!"},
+ {id:"pooh", name:"Винни-Пух — мыслитель цифровой эпохи", emoji:"🐻", 
+  quote:"«Кажется, тут есть что-то полезное… Надо это обдумать. И, возможно, подкрепиться».",
+  desc:"Ты собираешь идеи по кусочкам и не торопишься делать выводы. Тебе важно понять, как новая технология впишется в настоящую школьную жизнь.",
+  powers:["Вдумчивость","Практичный взгляд на идеи","Умение связывать новое с опытом"],
+  tip:"Твой следующий шаг: выбери одну тему урока и придумай к ней простую игру-викторину."},
+ {id:"cheburashka", name:"Чебурашка — друг искусственного интеллекта", emoji:"🐾", 
+  quote:"«Я пока не всё умею, зато теперь знаю, с чего начать!»",
+  desc:"Ты открыт(а) новому и готов(а) пробовать. Возможно, пока хочется подсказок, зато у тебя уже есть главное — желание разобраться и сделать что-то полезное для учеников.",
+  powers:["Любознательность","Открытость новому","Готовность учиться шаг за шагом"],
+  tip:"Твой следующий шаг: создай первую версию игры, покажи коллеге и улучши её по обратной связи."},
+ {id:"carlson", name:"Карлсон — в меру упитанный экспериментатор", emoji:"🍰", 
+  quote:"«Спокойствие, только спокойствие! Сейчас мы всё запустим… и немного поедим».",
+  desc:"Ты уходишь с зарядом вдохновения и готовностью экспериментировать. ИИ для тебя — не просто любопытная штука, а новый инструмент для уроков и маленьких подвигов.",
+  powers:["Энтузиазм","Готовность применять знания","Смелость экспериментировать"],
+  tip:"Твой следующий шаг: протестируй игру на учениках и посмотри, какие вопросы стоит улучшить."},
+ {id:"matroskin", name:"Кот Матроскин — хозяйственник ИИ", emoji:"🐱", 
+  quote:"«Неплохо. Но если надо — я это и сам переделаю, только молоко не забудьте».",
+  desc:"Ты быстро оцениваешь пользу и сразу думаешь, как применить её в хозяйстве. Тебе важно, чтобы технология работала, а не просто красиво светилась.",
+  powers:["Практичность","Деловая хватка","Умение доводить до результата"],
+  tip:"Твой следующий шаг: заведи папку «Готовые игры» и складывай туда удачные шаблоны."},
+ {id:"wolf", name:"Волк из «Ну, погоди!» — смелый экспериментатор", emoji:"🐺", 
+  quote:"«Ну, погоди!.. Сейчас я это точно запущу. Где тут кнопка?»",
+  desc:"Ты смело пробуешь, иногда неожиданно, и время от времени происходит магия. Главное — рядом есть друзья и подсказки.",
+  powers:["Смелость","Интуиция на идеи","Умение удивляться результату"],
+  tip:"Твой следующий шаг: запиши удачный промпт в блокнот — и в следующий раз сработает ещё лучше."},
+ {id:"hare", name:"Заяц из «Ну, погоди!» — шоумен цифрового класса", emoji:"🐰", 
+  quote:"«Отлично, а теперь сделаем это весело! Где тут кнопка “ещё анимации”?»",
+  desc:"Ты прирождённый шоумен: тебе мало, чтобы просто работало, хочется, чтобы было живо, красиво и с улыбкой.",
+  powers:["Творческое мышление","Вкус к подаче","Заряд энергии для класса"],
+  tip:"Твой следующий шаг: добавь в готовую игру одну яркую деталь — эмодзи, анимацию или шутку."},
+ {id:"gena", name:"Крокодил Гена — дипломат цифровой среды", emoji:"🐊", 
+  quote:"«Ребята, давайте жить дружно… и делить один ноутбук на всех!»",
+  desc:"Ты умеешь договариваться, помогать коллегам и сглаживать технические бури. Тебе важно, чтобы всем было комфортно.",
+  powers:["Командность","Терпение","Умение поддерживать других"],
+  tip:"Твой следующий шаг: собери мини-команду и сделайте одну общую игру."},
+ {id:"kuzya", name:"Домовёнок Кузя — мастер мелких правок", emoji:"🏠", 
+  quote:"«Я не сделал(а) всю игру… но вот эту кнопку — сделал(а) идеально!»",
+  desc:"Ты силён(на) в деталях и маленьких шагах. Из отдельных кусочков и складывается результат.",
+  powers:["Внимательность","Терпеливость","Умение работать по шагам"],
+  tip:"Твой следующий шаг: разбей большую идею на три маленьких шага и сделай только первый."},
+ {id:"pechkin", name:"Почтальон Печкин — хранитель инструкций", emoji:"📬", 
+  quote:"«Я вам файл принёс. Но сначала — покажите документы!»",
+  desc:"Ты любишь порядок, инструкции и чтобы всё было по правилам. Именно такие люди делают надёжные материалы для коллег.",
+  powers:["Внимательность к деталям","Любовь к порядку","Надёжность"],
+  tip:"Твой следующий шаг: оформи свою игру короткой инструкцией для коллег."},
+ {id:"malysh", name:"Малыш — любознательный напарник Карлсона", emoji:"🧒", 
+  quote:"«А можно я попробую сам? Только подскажите, куда нажимать».",
+  desc:"Ты открыт(а) новому и любишь учиться рядом с опытным наставником. Твоя сила — искренний интерес и готовность задавать вопросы.",
+  powers:["Любознательность","Открытость","Умение учиться у других"],
+  tip:"Твой следующий шаг: повтори игру по шагам с коллегой, а потом сделай один шаг сам(а)."}
+];
+
+const form = document.getElementById('quiz');
+const screensRoot = document.getElementById('screens');
+const resultScreen = document.getElementById('resultScreen');
+const progressText = document.getElementById('progressText');
+const progressFill = document.getElementById('progressFill');
+const progressBar = document.getElementById('progressBar');
+const hint = document.getElementById('hint');
+const answers = new Array(questions.length).fill(null);
+let lastCharacter = null;
+let completed = false;
+const tones = ['tone-1','tone-2','tone-3','tone-4','tone-5','tone-1'];
+
+questions.forEach((item, i) => {
+  const screen = document.createElement('section');
+  screen.className = 'screen'; screen.id = 'screen-' + i;
+  const card = document.createElement('div');
+  card.className = 'question ' + tones[i];
+  const head = document.createElement('div'); head.className = 'qhead';
+  const num = document.createElement('span'); num.className = 'num'; num.textContent = i + 1;
+  const title = document.createElement('h2'); title.textContent = item.q;
+  head.append(num, title); card.append(head);
+  const opts = document.createElement('div'); opts.className = 'options';
+  item.opts.forEach((opt, j) => {
+    const label = document.createElement('label'); label.className = 'option';
+    const radio = document.createElement('input'); radio.type = 'radio'; radio.name = 'q' + i; radio.value = j;
+    const text = document.createElement('span'); text.textContent = opt.t;
+    label.append(radio, text); opts.append(label);
+    radio.addEventListener('change', () => {
+      answers[i] = j;
+      opts.querySelectorAll('label.option').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected'); hint.classList.remove('show'); updateProgress();
+    });
+  });
+  card.append(opts);
+  const nav = document.createElement('div'); nav.className = 'nav';
+  const backBtn = document.createElement('button'); backBtn.type = 'button'; backBtn.className = 'secondary';
+  backBtn.textContent = '← Назад'; backBtn.disabled = i === 0;
+  backBtn.addEventListener('click', () => goTo(i - 1));
+  const nextBtn = document.createElement('button'); nextBtn.type = 'button';
+  nextBtn.textContent = i === questions.length - 1 ? 'Узнать героя →' : 'Далее →';
+  nextBtn.addEventListener('click', () => {
+    if (answers[i] === null) { hint.textContent = 'Сначала выбери один вариант — тогда пойдём дальше 🙂'; hint.classList.add('show'); return; }
+    if (i === questions.length - 1) finish(); else goTo(i + 1);
+  });
+  nav.append(backBtn, nextBtn); card.append(nav);
+  screen.append(card); screensRoot.append(screen);
+});
+
+function updateProgress() {
+  const count = answers.filter(a => a !== null).length;
+  progressText.textContent = '⭐ ' + count + ' из ' + questions.length;
+  progressFill.style.width = (count / questions.length * 100) + '%';
+  progressBar.setAttribute('aria-valuenow', count);
+  if (completed) return;
+  hint.textContent = 'Отвечено ' + count + ' из ' + questions.length + '. Выбирай вариант и жми «Далее» ✨';
+  hint.classList.add('show');
+}
+
+function goTo(index) {
+  if (index < 0 || index >= questions.length) return;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + index).classList.add('active');
+  resultScreen.classList.remove('active');
+  const selected = answers[index];
+  if (selected !== null) {
+    const radio = form.querySelector('input[name="q' + index + '"][value="' + selected + '"]');
+    if (radio) { radio.checked = true; radio.closest('label').classList.add('selected'); }
+  }
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function pickCharacter() {
+  const total = {E:0, L:0, C:0, H:0};
+  answers.forEach((a, i) => { const s = questions[i].opts[a].s; for (const k in s) total[k] += s[k]; });
+  const {E, L, C, H} = total;
+  const max = Math.max(E, L, C, H);
+  const leaders = Object.keys(total).filter(k => total[k] === max);
+  if (H >= 3 && C >= 2 && E <= 2) return characters.find(c => c.id === 'gena');
+  if (C >= 4 && E <= 2 && L <= 3) return characters.find(c => c.id === 'eeyore');
+  if (E >= 4 && L >= 3 && C <= 1) return characters.find(c => c.id === 'wolf');
+  if (E >= 5 && C <= 1 && L <= 2) return characters.find(c => c.id === 'carlson');
+  if (E >= 3 && H >= 2 && L <= 2 && C <= 2) return characters.find(c => c.id === 'matroskin');
+  if (H >= 3 && E >= 2 && L >= 2) return characters.find(c => c.id === 'hare');
+  if (L >= 4 && E <= 2) return characters.find(c => c.id === 'cheburashka');
+  if (E >= 3 && L >= 3) return characters.find(c => c.id === 'pooh');
+  if (C >= 3 && H >= 1 && E <= 2) return characters.find(c => c.id === 'pechkin');
+  if (max <= 3) return characters.find(c => c.id === 'kuzya');
+  if (L >= 3 && C >= 2) return characters.find(c => c.id === 'malysh');
+  if (leaders.includes('E')) return characters.find(c => c.id === 'carlson');
+  if (leaders.includes('L')) return characters.find(c => c.id === 'cheburashka');
+  if (leaders.includes('C')) return characters.find(c => c.id === 'eeyore');
+  return characters.find(c => c.id === 'gena');
+}
+
+function finish() {
+  lastCharacter = pickCharacter();
+  completed = true;
+  
+  document.getElementById('resultEmoji').textContent = lastCharacter.emoji;
+  document.getElementById('resultTitle').textContent = lastCharacter.name;
+  document.getElementById('resultQuote').textContent = lastCharacter.quote;
+  document.getElementById('resultDescription').textContent = lastCharacter.desc;
+  const powers = document.getElementById('resultPowers'); powers.replaceChildren();
+  lastCharacter.powers.forEach(p => { const li = document.createElement('li'); li.textContent = p; powers.append(li); });
+  document.getElementById('resultTip').textContent = lastCharacter.tip;
+  document.getElementById('copyStatus').textContent = '';
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  resultScreen.classList.add('active'); resultScreen.focus();
+  hint.classList.remove('show');
+  progressText.textContent = '⭐ Готово!';
+  progressFill.style.width = '100%';
+  progressBar.setAttribute('aria-valuenow', questions.length);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('restartBtn').addEventListener('click', () => {
+  answers.fill(null); completed = false; lastCharacter = null;
+  form.querySelectorAll('input[type=radio]').forEach(r => { r.checked = false; });
+  form.querySelectorAll('label.option').forEach(l => l.classList.remove('selected'));
+  resultScreen.classList.remove('active'); goTo(0);
+});
+
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  if (!lastCharacter) return;
+  const text = 'Мой советский мультгерой после практикума по ИИ: ' + lastCharacter.name + '\n' +
+    lastCharacter.quote + '\n' + lastCharacter.desc + '\n' +
+    'Мои суперсилы: ' + lastCharacter.powers.join(', ') + '\n' + lastCharacter.tip;
+  const status = document.getElementById('copyStatus');
+  try { await navigator.clipboard.writeText(text); status.textContent = 'Результат скопирован — можно отправить коллегам!'; }
+  catch (e) { status.textContent = text; }
+});
+
+goTo(0);
+</script>
+</body>
+</html>
